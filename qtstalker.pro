@@ -147,6 +147,7 @@ SUBDIRS += plugins/Plot
 #SUBDIRS += plugins/ROC
 #SUBDIRS += plugins/RSI
 #SUBDIRS += plugins/SAR
+SUBDIRS += plugins/Scanner
 #SUBDIRS += plugins/SINE
 #SUBDIRS += plugins/STDDEV
 #SUBDIRS += plugins/STOCHF

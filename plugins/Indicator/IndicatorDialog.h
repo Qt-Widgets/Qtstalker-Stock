@@ -36,12 +36,10 @@ class IndicatorDialog : public Dialog
     enum Action
     {
       _CURVE_INSERT,
-      _HELP,
       _INDICATOR_INSERT,
       _MARKER_INSERT,
       _PLOT_INSERT,
-      _STEP_REMOVE,
-      _QUIT
+      _STEP_REMOVE
     };
     
     IndicatorDialog (QString file, QString name);

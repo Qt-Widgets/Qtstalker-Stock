@@ -34,13 +34,15 @@ class YahooHistoryObject : public Object
 
   public:
     YahooHistoryObject (QString profile, QString name);
-    int message (ObjectCommand *);
     int app (ObjectCommand *);
     int download (ObjectCommand *);
     void getUrl (QDateTime sd, QDateTime ed, QString symbol, QString &url);
     void parseHistory (QByteArray &ba, QString &symbol, QString &name);
     int downloadName (QString symbol, QString &name);
     void importHistory ();
+    
+  public slots:
+    int message (ObjectCommand *);
     
   private:
     QStringList _commandList;

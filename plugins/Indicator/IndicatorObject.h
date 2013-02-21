@@ -40,6 +40,7 @@ class IndicatorObject : public Object
     int loadMarkers (ObjectCommand *);
     int dialog (ObjectCommand *);
     int load (ObjectCommand *);
+    int pluginSteps (ObjectCommand *);
 
     void clear();
     int load ();

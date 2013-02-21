@@ -40,23 +40,12 @@ IndicatorObject::IndicatorObject (QString profile, QString name)
   _commandList << QString("load_markers");
   _commandList << QString("dialog");
   _commandList << QString("load");
+  _commandList << QString("plugin_steps");
 
   _plotCommands << QString("edit");
   _plotCommands << QString("delete");
   _plotCommands << QString("info");
   _plotCommands << QString("modified");
-
-/*
-  QStringList tl;
-  QDir dir(QDir::homePath());
-  tl << dir.absolutePath() << QString("OTA") << QString("Indicator") << _profile << QString("indicator");
-  _indicatorPath = tl.join("/");
-  if (! dir.mkpath(_indicatorPath))
-    qDebug() << "IndicatorObject::IndicatorObject" << _indicatorPath;
-  _indicatorPath.append("/" + _name);
-
-  load();
-*/
 }
 
 IndicatorObject::~IndicatorObject ()
@@ -99,6 +88,9 @@ IndicatorObject::message (ObjectCommand *oc)
       break;
     case 4:
       return load(oc);
+      break;
+    case 5:
+      return pluginSteps(oc);
       break;
     default:
       break;
@@ -325,20 +317,6 @@ IndicatorObject::load (ObjectCommand *oc)
   {
     qDebug() << "IndicatorObject::load: invalid path";
     return 0;
-/*
-    // create new indicator
-    QStringList tl;
-    QDir dir(QDir::homePath());
-    tl << dir.absolutePath() << QString("OTA") << QString("Indicator") << QString("indicators");
-    _indicatorPath = tl.join("/");
-
-    if (! dir.mkpath(_indicatorPath))
-      qDebug() << "IndicatorObject::IndicatorObject" << _indicatorPath;
-
-    _indicatorPath.append("/" + _name);
-
-    return 1;
-*/
   }
 
   return load();
@@ -377,7 +355,7 @@ IndicatorObject::load ()
     settings->beginGroup(_order.at(pos));
 
     QString plugin = settings->value(QString("plugin")).toString();
-    
+
     // new object?
     bool newFlag = FALSE;
     Object *o = _objects.value(_order.at(pos));
@@ -433,6 +411,7 @@ IndicatorObject::load ()
     }
     
     settings->endGroup();
+qDebug() << "IndicatorObject::load: OK" << _order.at(pos) << plugin;
   }
 
   delete settings;
@@ -445,6 +424,7 @@ IndicatorObject::load ()
       continue;
     delete o;
     _objects.remove(oldObjects.at(pos));
+qDebug() << "IndicatorObject::load: removed old object" << o->plugin() << oldObjects.at(pos);
   }
 
   return 1;
@@ -516,4 +496,29 @@ IndicatorObject::saveMarkers ()
     toc.setValue(QString("symbol"), _symbol);
     o->message(&toc);
   }
+}
+
+int
+IndicatorObject::pluginSteps (ObjectCommand *oc)
+{
+  QString plugin = oc->getString(QString("plugin"));
+  if (plugin.isEmpty())
+  {
+    qDebug() << "IndicatorObject::pluginSteps: invalid plugin";
+    return 0;
+  }
+
+  QStringList tl;
+  QHashIterator<QString, Object *> it(_objects);
+  while (it.hasNext())
+  {
+    it.next();
+    Object *o = it.value();
+    if (o->plugin() == plugin)
+      tl << it.key();
+  }
+  
+  oc->setValue(QString("steps"), tl);
+  
+  return 1;
 }

@@ -23,8 +23,6 @@
 #include "Util.h"
 #include "IndicatorAddStepDialog.h"
 
-#include "../../pics/help.xpm"
-#include "../../pics/quit.xpm"
 #include "../../pics/delete.xpm"
 #include "../../pics/indicator.xpm"
 #include "../../pics/chart.xpm"
@@ -73,19 +71,7 @@ IndicatorDialog::clear ()
 void
 IndicatorDialog::createActions ()
 {
-  QAction *a = new QAction(QIcon(help_xpm), tr("Help"), this);
-  a->setToolTip(tr("Help"));
-  a->setStatusTip(tr("Help"));
-  connect(a, SIGNAL(triggered(bool)), this, SLOT(help()));
-  _actions.insert(_HELP, a);
-  
-  a = new QAction(QIcon(quit_xpm), tr("Quit"), this);
-  a->setToolTip(tr("Quit"));
-  a->setStatusTip(tr("Quit"));
-  connect(a, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
-  _actions.insert(_QUIT, a);
-
-  a = new QAction(QIcon(delete_xpm), tr("&Remove Step"), this);
+  QAction *a = new QAction(QIcon(delete_xpm), tr("&Remove Step"), this);
   a->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
   a->setToolTip(tr("Remove Step"));
   a->setStatusTip(tr("Remove Step"));
@@ -148,9 +134,6 @@ IndicatorDialog::createTab ()
   // setup toolbar
   QToolBar *tb = new QToolBar(QString("main"));
   tb->setOrientation(Qt::Vertical);
-  tb->addAction(_actions.value(_QUIT));
-  tb->addAction(_actions.value(_HELP));
-  tb->addSeparator();
   tb->addAction(_actions.value(_INDICATOR_INSERT));
   tb->addAction(_actions.value(_CURVE_INSERT));
   tb->addAction(_actions.value(_MARKER_INSERT));
@@ -509,4 +492,3 @@ IndicatorDialog::saveIndicator ()
   
   return 1;
 }
-

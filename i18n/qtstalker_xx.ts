@@ -1943,13 +1943,6 @@ Create a new group first.</source>
     </message>
 </context>
 <context>
-    <name>QtstalkerApp</name>
-    <message>
-        <source>Ready</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ROCDialog</name>
     <message>
         <source>Method</source>
