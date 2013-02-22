@@ -84,4 +84,4 @@ printf "Compiling existing translations ...\n"
 lrelease i18n/qtstalker_??.ts
 printf "Done\n"
 
-printf "\nYou may now 'make && sudo make install'\n"
+printf "\nYou may now 'make && make install'\n"
